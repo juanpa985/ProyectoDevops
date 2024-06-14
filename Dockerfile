@@ -16,6 +16,4 @@ RUN chmod 644 /var/www/html/index.html
 
 EXPOSE 8000
 
-RUN httpd
-
 
