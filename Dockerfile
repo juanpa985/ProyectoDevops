@@ -16,6 +16,8 @@ RUN find /var/www/html -type f -exec chmod 644 {} \;
 
 RUN chmod 644 /var/www/html/index.html
 
+EXPOSE 8030
+
 RUN httpd
 
-EXPOSE 8030
+
