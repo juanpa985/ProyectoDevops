@@ -1,0 +1,31 @@
+pipeline {
+    agent any 
+    
+    stages{
+        stage('Chekout repo') {
+            steps {
+                checkout scmGit(
+                  branches: [[name: '*/main']] ,
+                  extensions: [],
+                  userRemoteConfigs: [[url: 'https://github.com/juanpa985/ProyectoDevops']]
+                )
+            }
+        }
+        
+        stage("Build"){
+            steps {
+                echo "Contruyendo la imagen.."
+                git branch: 'main', url: 'https://github.com/juanpa985/ProyectoDevops.git'
+                sh "echo pikachu | sudo -S docker build -t server_web ."
+            }
+        }
+        stage("Deploy"){
+            steps {
+                echo "Desplegar el contenedor"
+                sh "echo pikachu | sudo -S docker stop prueba"
+                sh "echo pikachu | sudo -S docker rm prueba"
+                sh "echo pikachu | sudo -S docker run -d -p 8000:80 --name prueba server_web"
+            }
+        }
+    }
+}
